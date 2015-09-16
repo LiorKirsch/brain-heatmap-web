@@ -1,0 +1,29 @@
+
+.svg_holder {
+  position:relative;
+  float:left;
+}
+
+.line_div{ 
+    position:relative;
+    width:100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.structure_description {
+    position:absolute;
+    bottom:-10px;
+    left:20px;
+}
+
+.colorbar {
+    position:relative;
+    margin: 10px;
+    float:left;
+}
+
+.svgDrawing {
+	height:300px;
+	width:600px;
+}

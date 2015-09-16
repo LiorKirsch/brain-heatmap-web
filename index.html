@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Easy visualization of brain data as a heatmap">
+    <title>Brain heatmap by LiorKirsch</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+
+    function getURLParameter(name, url) {
+	    return decodeURI(
+		(RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1]
+	    );
+    }
+
+    function redirectToPage(location, spreadsheetkey,ontology, minValue, maxValue) {
+	window.location.href = "brainmap.html?location="  +location + "&ontology=" + ontology  +"&min=" + minValue +"&max=" + maxValue + "&spreadsheetkey=" + spreadsheetkey;
+    }
+
+     function generateHeatmap()
+    {
+	var spreadsheet = $('#spreadsheet').val();
+	var minValue = $('#minValue').val();
+	var maxValue = $('#maxValue').val();
+	var ontology = $('#ontology').val();
+
+        var spreadsheetkey = getURLParameter("key", spreadsheet);
+	if (minValue == "") {minValue = "null"}
+	if (maxValue == "") {maxValue = "null"}
+
+	redirectToPage("20", spreadsheetkey,ontology, minValue, maxValue);
+    }
+    </script>
+  </head>
+  <body>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"> </script>
+
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	  ga('create', 'UA-45735305-1', 'liorkirsch.github.io');
+	  ga('send', 'pageview');
+	</script>
+
+    <div class="wrapper">
+      <header>
+        <h1>Brain heatmap</h1>
+        <p>Easy visualization of brain data as a heatmap</p>
+
+        <p class="view"><a href="https://github.com/LiorKirsch/brain-heatmap">View the Project on GitHub <small>LiorKirsch/brain-heatmap</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/LiorKirsch/brain-heatmap/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/LiorKirsch/brain-heatmap/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/LiorKirsch/brain-heatmap">View On <strong>GitHub</strong></a></li>
+        </ul>
+
+      </header>
+      <section>
+        <h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a> Create custom brain heatmaps</h3>
+
+<p>Use this page to generate brain heatmaps ontop of the <a href="http://www.brain-map.org/" > Allen Brain  </a> Atlas. You can generate heatmaps for the human brain (such as <a href="http://liorkirsch.github.io/brain-heatmap/brainmap.html?location=36&ontology=human&min=5&max=9&spreadsheetkey=0AiPUAyOtb4cHdHo2X2JSNHFqbnVtdDJLNHVyZG9fM0E" >this </a>) or for the mouse brain (such as <a href="brainmap.html?location=18&ontology=mouse&spreadsheetkey=0AiPUAyOtb4cHdGlldzdIdnd3d0Z5c1Z4TF9nMVJ1TWc&min=0&max=60" > this</a>). This is done by editing a google spreadsheet template and publishing it to the web.</p>
+
+<p> * If you are more comfortable using matlab you can find the source code on my <a href="https://github.com/LiorKirsch/brain-heatmap">github page </a>. </p>
+
+<p>
+<img src="images/humanBrain2.png" > <img src="images/mouseBrain2.png" >
+</p>
+<h3><a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Customize the brain heatmaps in four steps</h3>
+
+<p> <ol> 
+<li> <b> Make your own copy of the spreadsheet template: </b> From google spreadsheet menu press <code>
+File -> make a copy
+</code>
+
+	<ul> <li>For the mouse brain use  <a href="https://docs.google.com/spreadsheet/ccc?key=0AiPUAyOtb4cHdFN5d2VrMC15VTdHakl3VkNleWNacXc&usp=sharing" target=newtab> this template </a>. </li> 
+	<li> For the human brain use <a href="https://docs.google.com/spreadsheet/ccc?key=0AiPUAyOtb4cHdDlrT0x6bDVHUmJfNmxrLXJfelYxRUE&usp=sharing" target=newtab> this template </a>.
+	</li> </ul>
+ </li>
+
+<li> <b> Edit your new spreadsheet: </b> For each brain region that interest you provide a numeric value. It is possible to remove the unused regions (rows).
+The region names follow the ontology used in the <a href="http://atlas.brain-map.org/atlas?atlas=2" > Allen Mouse Reference Atlas </a> and in the <a href="http://atlas.brain-map.org/atlas?atlas=138322605#atlas=138322605" > Human Brain Reference Atlas </a>.<br>
+Here is an example of spreadsheet <a href="https://docs.google.com/spreadsheet/pub?key=0AiPUAyOtb4cHdGlldzdIdnd3d0Z5c1Z4TF9nMVJ1TWc&output=html" target=newtab> for the mouse </a> and <a href="https://docs.google.com/spreadsheet/pub?key=0AiPUAyOtb4cHdHo2X2JSNHFqbnVtdDJLNHVyZG9fM0E&output=html" target=newtab> for the human</a>.
+</li>
+
+<li>
+<b> Publish your google spreadsheet to the web: </b>
+From google spreadsheet menu press
+ <code>
+File -> publish to the web -> start publishing 
+</code> then copy the link.
+</li>
+<li> <b>Fill the rest of this form: </b>
+
+	<ul>
+	<li> Place the link to your google docs here: <br> <input id="spreadsheet" size="60" placeholder="https://docs.google.com/spreadsheet/pub?key=0AiPUAyOtb4cHdHNtMzN2MDJ6VFNHTlI4RmRxRkkxVmc&output=html"> </input>. </li>
+	<li> choose the atlas: 
+	<select id="ontology">
+	  <option value="human" selected="selected">human</option>
+	  <option value="mouse" >mouse</option>
+	</select>
+	</li>
+	<li> (optional) provide a minimum <input id="minValue" size="2"> </input> and a maximum <input id="maxValue" size="2"> </input> values for the color scale. </li>
+	<li> <button onclick="generateHeatmap();"> Generate heatmap ⇒ </button>
+	</li>
+	</ul>
+</li>
+</ol>
+</p>
+
+
+
+<p> 
+</p>
+
+<h3>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
+<p><ul>
+
+<li>
+The expression of the gene <a href="http://liorkirsch.github.io/brain-heatmap/brainmap.html?location=36&ontology=human&min=5&max=9&spreadsheetkey=0AiPUAyOtb4cHdHo2X2JSNHFqbnVtdDJLNHVyZG9fM0E" > HTR1B in the adult human brain </a>   (the <a href="https://docs.google.com/spreadsheet/pub?key=0AiPUAyOtb4cHdHo2X2JSNHFqbnVtdDJLNHVyZG9fM0E&output=html" > spreadsheet </a> used).
+</li>
+</ul></p>
+
+<h3>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Special thanks</h3>
+
+<p> I would like the thanks <a href="http://www.brain-map.org/"> The Allen Institute </a> for the hard work they put in creating the reference atlases and for making them publicly available online.</p>
+
+
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/LiorKirsch">LiorKirsch</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>

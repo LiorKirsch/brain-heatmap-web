@@ -1,0 +1,124 @@
+<html>
+<head>
+    <title>Brain heatmap</title>
+    <script type="text/javascript" src="webtoolkit.base64.js"></script>
+    <link rel="stylesheet" href="brainmap.css">
+</head>
+<body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.brainmap.js"></script>
+<script type="text/javascript" src="jquery.colorbar.js"></script>
+
+
+<div id="source_div" class="line_div" ></div>
+<div class="line_div">
+    <div id="colorbar_div" class="colorbar"></div>
+    <div id="dest_div" ></div>
+   
+</div>
+
+<!--
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	  ga('create', 'UA-45735305-1', 'liorkirsch.github.io');
+	  ga('send', 'pageview');
+	</script>
+-->
+
+
+<script>
+    function getURLParameter(name) {
+		    return decodeURI(
+			(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+		    );
+		}
+    
+    function checkForDefaultParms() {
+     
+    var location1 = getURLParameter('location1');
+    var location2 = getURLParameter('location2');
+	var spreadsheetkey = getURLParameter('spreadsheetkey');
+	var ontology1 = getURLParameter('ontology1');
+    var ontology2 = getURLParameter('ontology2');
+	var minValue = getURLParameter('minValue');
+	var maxValue = getURLParameter('maxValue');
+
+	var fileName = getURLParameter('fileName');
+	var sourceRegionID = getURLParameter('sourceRegionID');
+
+	var redirectionNeeded = false;
+	if ( "null" == location1)       { redirectionNeeded = true; location1 = "20"; 	}
+    if ( "null" == location2)       { redirectionNeeded = true; location2 = "20"; 	}
+	if ( "null" == ontology1)       { redirectionNeeded = true; ontology1 = "human_compact";	}
+    if ( "null" == ontology2)       { redirectionNeeded = true; ontology2 = "mouse";	}
+	if ( redirectionNeeded ) {             redirectToPage2({location1:location1, location2:location2, ontology1:ontology1, ontology2:ontology2}); } 
+
+    var parms = {location1 : location1, location2:location2, ontology1 : ontology1, ontology2 : ontology2,spreadsheetkey:spreadsheetkey,minValue:minValue, maxValue:maxValue, fileName:fileName, sourceRegionID:sourceRegionID} ;
+    return(parms);
+    }
+
+    
+ $(document).ready(function()
+    {
+	//var colormap = ['6A0000','740000','7F0000','8A0000','940000','9F0000','AA0000','B40000','BF0000','C90000','D40000','DF0000','E90000','F40000','FF0000','FF0A00','FF1500','FF1F00','FF2A00','FF3500','FF3F00','FF4A00','FF5500','FF5F00','FF6A00','FF7400','FF7F00','FF8A00','FF9400','FF9F00','FFAA00','FFB400','FFBF00','FFC900','FFD400','FFDF00','FFE900','FFF400','FFFF00','FFFF0F','FFFF1F','FFFF2F','FFFF3F','FFFF4F','FFFF5F','FFFF6F','FFFF7F','FFFF8F','FFFF9F','FFFFAF','FFFFBF','FFFFCF','FFFFDF'] //Heat colormap
+
+	var colormap = [  '00008F', '00009F', '0000AF', '0000BF', '0000CF', '0000DF', '0000EF', '0000FF', '000FFF', '001FFF', '002FFF', '003FFF', '004FFF', '005FFF', '006FFF', '007FFF', '008FFF', '009FFF', '00AFFF', '00BFFF', '00CFFF', '00DFFF', '00EFFF', '00FFFF', '0FFFEF', '1FFFDF', '2FFFCF', '3FFFBF', '4FFFAF', '5FFF9F', '6FFF8F', '7FFF7F', '8FFF6F', '9FFF5F', 'AFFF4F', 'BFFF3F', 'CFFF2F', 'DFFF1F', 'EFFF0F', 'FFFF00', 'FFEF00', 'FFDF00', 'FFCF00', 'FFBF00', 'FFAF00', 'FF9F00', 'FF8F00', 'FF7F00', 'FF6F00', 'FF5F00', 'FF4F00', 'FF3F00', 'FF2F00', 'FF1F00', 'FF0F00', 'FF0000', 'EF0000', 'DF0000', 'CF0000', 'BF0000', 'AF0000', '9F0000', '8F0000', '7F0000']; //jet colormap
+     
+    var parms = checkForDefaultParms();
+     
+    var source_brain_div = $("#source_div").brainmap( { location : parms.location1,  ontology : parms.ontology1, index:1, colormap:['FF6A00'], hide_navigation:true } );
+    source_brain_div.on( "locationChanged", function( event, newLocation ){  redirectToPage2({location1:newLocation});  });
+    var dest_brain_div = $("#dest_div").brainmap( {  location : parms.location2,  ontology : parms.ontology2, index:2, colormap:colormap, hide_navigation:false,minValue:parms.minValue, maxValue:parms.maxValue} );
+    dest_brain_div.on( "locationChanged", function( event, newLocation ){  redirectToPage2({location2:newLocation});  });
+        
+
+	var sourceRegionID = window.location.hash.substr(1);
+	if ( "" == sourceRegionID)  { sourceRegionID = 4010};                
+	var fileName = parms.fileName;
+	if ( "null" == parms.fileName)  { fileName = 'correlationSimilarity.json'};
+
+
+    $.getJSON(fileName, function(multiRegionData) {
+
+        var currentRegionData = multiRegionData[sourceRegionID];
+        var sourceDict = {};   sourceDict[sourceRegionID] = 1;
+        var sourceRegionData = { 'valuesDict' : sourceDict, 'minValue' : 0, 'maxValue' : 1 };
+        source_brain_div.createBrainHeatmaps(sourceRegionData);
+
+        
+        var destDict = currentRegionData.destination;
+        var destRegionData = { 'valuesDict' : destDict, 'minValue' : multiRegionData['minValue'], 'maxValue' : multiRegionData['maxValue'] }; 
+        dest_brain_div.createBrainHeatmaps(destRegionData);
+        dest_brain_div.createColorBar($("#colorbar_div"), {'width':20, 'height':200, 'colormap':colormap}  ) 
+
+        source_brain_div.on( "areaClicked", function( event, region_id, region_name ) {
+            console.log( region_id , region_name); 
+            
+            var sourceDict = {};   sourceDict[region_id] = 124;
+			window.location.hash = region_id;
+            source_brain_div.changeRegionData(source_brain_div, { 'valuesDict' : sourceDict, 'minValue' : 0, 'maxValue' : 1 } );
+
+            if (multiRegionData[region_id]){
+                var valuesDict = multiRegionData[region_id].destination;
+            }
+            else {
+                var valuesDict = {};
+            }
+
+            var newRegionData = { 'valuesDict' : valuesDict, 'minValue' : multiRegionData['minValue'], 'maxValue' : multiRegionData['maxValue']  };
+            dest_brain_div.changeRegionData(dest_brain_div, newRegionData );
+
+        });
+    }).error(function(jqXHR, textStatus, errorThrown) {
+            console.log("------" + textStatus + "------");
+            console.log("error in getting region values data:" + fileName );
+            console.log("incoming Text " + jqXHR.responseText);
+    }); 
+
+    		
+    })	;
+</script>
+</body>

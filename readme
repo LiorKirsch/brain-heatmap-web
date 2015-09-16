@@ -1,0 +1,8 @@
+to replace all the fill colors to the same color use:
+
+sed -i 's/fill:......./fill:\#f2f1f0/g' *.svg
+
+
+
+To find all the structure ids in the svg files:
+grep -oh 'structure_id="[0-9]*"' *.svg | uniq > unique_structures.txt
