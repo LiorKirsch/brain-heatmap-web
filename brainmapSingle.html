@@ -100,7 +100,7 @@
     source_brain_div.on( "locationChanged", function( event, newLocation ){  redirectToPage2({location:newLocation});  });
      
     source_brain_div.css({'width':'40%', 'height':'40%'});
-    source_brain_div.createColorBar($("#colorbar_div"), {'width':20, 'height':200, 'colormap':colormap}  )
+   
 
     
     Tabletop.init( { key: spreadsheetkey,
@@ -122,6 +122,7 @@
                    }
                    regionData = {'valuesDict': valuesDict,'minValue' : min_val, 'maxValue' : max_val };
                    source_brain_div.changeRegionData(source_brain_div, regionData );
+		   source_brain_div.createColorBar($("#colorbar_div"), {'width':20, 'height':200, 'colormap':colormap}  )
                },
                simpleSheet: true } )
 //    var fileName = 'samp.json';
