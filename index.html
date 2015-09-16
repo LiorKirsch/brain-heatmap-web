@@ -22,7 +22,7 @@
     }
 
     function redirectToPage(location, spreadsheetkey,ontology, minValue, maxValue) {
-	window.location.href = "brainmap.html?location="  +location + "&ontology=" + ontology  +"&min=" + minValue +"&max=" + maxValue + "&spreadsheetkey=" + spreadsheetkey;
+	window.location.href = "brainmapSingle.html?location="  +location + "&ontology=" + ontology  +"&min=" + minValue +"&max=" + maxValue + "&spreadsheetkey=" + spreadsheetkey;
     }
 
      function generateHeatmap()
@@ -109,6 +109,7 @@ File -> publish to the web -> start publishing
 	<li> choose the atlas: 
 	<select id="ontology">
 	  <option value="human" selected="selected">human</option>
+      <option value="human_compact">human (compact display)</option>
 	  <option value="mouse" >mouse</option>
 	</select>
 	</li>
@@ -130,8 +131,15 @@ File -> publish to the web -> start publishing
 <p><ul>
 
 <li>
-The expression of the gene <a href="http://liorkirsch.github.io/brain-heatmap/brainmap.html?location=36&ontology=human&min=5&max=9&spreadsheetkey=0AiPUAyOtb4cHdHo2X2JSNHFqbnVtdDJLNHVyZG9fM0E" > HTR1B in the adult human brain </a>   (the <a href="https://docs.google.com/spreadsheet/pub?key=0AiPUAyOtb4cHdHo2X2JSNHFqbnVtdDJLNHVyZG9fM0E&output=html" > spreadsheet </a> used).
+The expression of the gene <a href="./brainmapSingle.html?location=36&ontology=human&min=5&max=9&spreadsheetkey=0AiPUAyOtb4cHdHo2X2JSNHFqbnVtdDJLNHVyZG9fM0E" > HTR1B in the adult human brain </a>   (the <a href="https://docs.google.com/spreadsheet/pub?key=0AiPUAyOtb4cHdHo2X2JSNHFqbnVtdDJLNHVyZG9fM0E&output=html" > spreadsheet </a> used).
 </li>
+<li>
+The expression of the gene <a href="./brainmapSingle.html?location=1&ontology=human_compact&spreadsheetkey=1ZK2duuEGRyGbn6Rz4zj3AjSK_GKDe_t2XYzzAjs24cI" > HTR1B in the adult human brain <b> compact display</b>   </a>   (the <a href="https://docs.google.com/spreadsheet/pub?key=1ZK2duuEGRyGbn6Rz4zj3AjSK_GKDe_t2XYzzAjs24cI&output=html" > spreadsheet </a> used).
+</li>
+<li>
+Example of usage in  <a href="./brainmapSingle.html?location=19&spreadsheetkey=1cPaHhWJCmc2y6Xcixir0Q8uo2hKLC12zd76vYd3BxSo&ontology=mouse" > the mouse brain </a>   (the <a href="https://docs.google.com/spreadsheet/pub?key=1cPaHhWJCmc2y6Xcixir0Q8uo2hKLC12zd76vYd3BxSo&output=html" > spreadsheet </a> used).
+</li>
+
 </ul></p>
 
 <h3>
