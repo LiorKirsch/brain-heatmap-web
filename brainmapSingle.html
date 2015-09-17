@@ -1,6 +1,6 @@
 <html>
 <head>
-<script type="text/javascript" src="webtoolkit.base64.js"></script>
+<script type="text/javascript" src="javascripts/webtoolkit.base64.js"></script>
  <title>Brain heatmap</title>
 </head>
 <body>
@@ -47,7 +47,7 @@
 	if ( "null" == ontology)       { redirectionNeeded = true; ontology = "human";	}
 	if ( redirectionNeeded ) {             redirectToPage({location:location, spreadsheetkey:spreadsheetkey,ontology:ontology, minValue:minValue, maxValue:maxValue}); } 
 
-	var atlasFile="atlas.json";
+	var atlasFile="atlases/atlas.json";
 	var regionData="null";
     var hide_navigation = false;
     

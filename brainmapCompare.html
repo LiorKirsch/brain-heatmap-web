@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Brain heatmap</title>
-    <script type="text/javascript" src="webtoolkit.base64.js"></script>
+    <script type="text/javascript" src="javascripts/webtoolkit.base64.js"></script>
     <link rel="stylesheet" href="brainmap.css">
 </head>
 <body>
@@ -78,7 +78,7 @@
 	var sourceRegionID = window.location.hash.substr(1);
 	if ( "" == sourceRegionID)  { sourceRegionID = 4010};                
 	var fileName = parms.fileName;
-	if ( "null" == parms.fileName)  { fileName = 'correlationSimilarity.json'};
+	if ( "null" == parms.fileName)  { fileName = 'json/correlationSimilarity.json'};
 
 
     $.getJSON(fileName, function(multiRegionData) {

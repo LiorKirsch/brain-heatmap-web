@@ -3,7 +3,8 @@
 	$.fn.brainmap = function (options) {
       
 		var settings = {
-            atlasFile:"atlas.json", 
+            atlasFile:"atlases/atlas.json", 
+            atlasFolder:"atlases", 
             location : "20",
             minValue : "null",
             maxValue : "null",
@@ -97,7 +98,7 @@
 
 
                 // loads the svg image for this specific slice.
-                var fileName = atlasData["directory"] + "/" + settings.location + ".svg";
+                var fileName = settings.atlasFolder + "/" + atlasData["directory"] + "/" + settings.location + ".svg";
                 $(svg_container).load(fileName, null, function(data){   
                     
                     
@@ -153,12 +154,16 @@
                       $(svgElement).data('defaultStrokeWidth',svgElement.style.strokeWidth);
 
                       $(svgElement).data('bound',true);
-                      $(svgElement).mouseenter(function() {
+                      $(svgElement).mouseover(function() {
+                              this.style.stroke_old = this.style.stroke;
+                              this.style.strokeWidth_old = this.style.strokeWidth;
 							  this.style.stroke = "#cf3";
                               this.style.strokeWidth = 20;
                               var this_id = this.getAttribute('structure_id');
                               $(svg_div).find('#structure_info').text( structure_name + '  (' + activeRegion + ' - ' + value + ') ');
-                        }).mouseleave(function() {
+                        }).mouseout(function() {
+                              this.style.stroke = this.style.stroke_old;
+                              this.style.strokeWidth = this.style.strokeWidth_old;
 							 if (showOutline) {
 		                          this.style.stroke = $(this).data('defaultStroke');
 		                          this.style.strokeWidth = $(this).data('defaultStrokeWidth');

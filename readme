@@ -1,8 +1,22 @@
-to replace all the fill colors to the same color use:
+Brain heatmap website
+======================
 
-sed -i 's/fill:......./fill:\#f2f1f0/g' *.svg
+Code to build the static website which shows heatmaps as
+illustration on the brain.
+
+The static website draws the value for the heatmap from google docs spreadsheet.
 
 
+  atlases/		 - contain the svg files used to draw the brain regions. There is one file per slice.
+  gh-pages_site/ - contains the static gh-pages site files.
+  javascripts/	 - contains external javascript libraries used.
+  json/ 		 - contains some json files for the compare brain option.
+  ontology/      - contains brain ontology in csv and in json formats.
 
-To find all the structure ids in the svg files:
-grep -oh 'structure_id="[0-9]*"' *.svg | uniq > unique_structures.txt
+  brainmapCompare.html 	- used for mouse and human comparsion.
+  brainmapSingle.html  	- used to display heatmap using brain illustration.
+  jquery.brainmap.js   	- the main javascript library
+  jquery.colorbar.js   	- Js library to create the color bar.
+  brainmap.css		   	- style sheet for brain heatmap.
+  index.html       	   	- the entry page for the gh-page site.
+  
