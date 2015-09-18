@@ -12,7 +12,8 @@
 
 
 <div id="colorbar_div" style="width:60px; float:left;margin-top:20px;"></div>
-<div id="source_div" style="margin-left:60px;margin-top:20px;width:100%;height:100%"></div>
+<div id="source_div" style="margin-left:60px;margin-top:20px;"></div>
+
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -33,6 +34,7 @@
 
  $(document).ready(function()
     {
+    var source_brain_div = $("#source_div");
 	var default_color = '#f2f1f0';
 	var heatcolormap = ['6A0000','740000','7F0000','8A0000','940000','9F0000','AA0000','B40000','BF0000','C90000','D40000','DF0000','E90000','F40000','FF0000','FF0A00','FF1500','FF1F00','FF2A00','FF3500','FF3F00','FF4A00','FF5500','FF5F00','FF6A00','FF7400','FF7F00','FF8A00','FF9400','FF9F00','FFAA00','FFB400','FFBF00','FFC900','FFD400','FFDF00','FFE900','FFF400','FFFF00','FFFF0F','FFFF1F','FFFF2F','FFFF3F','FFFF4F','FFFF5F','FFFF6F','FFFF7F','FFFF8F','FFFF9F','FFFFAF','FFFFBF','FFFFCF','FFFFDF'];
 	var colormap = heatcolormap;
@@ -64,6 +66,7 @@
 //                           'maxValue' : 101
 //                           }; 
             hide_navigation = false;
+            source_brain_div.css({'max-height':'400px'});
             break;
         case "mouse":
             if ( "null" == spreadsheetkey) {
@@ -75,6 +78,7 @@
 //                           'maxValue' : 101
 //                           }; 
             hide_navigation = false;
+            source_brain_div.css({'max-height':'300px'});
             break;
         case "human_compact":
             if ( "null" == spreadsheetkey) {
@@ -88,21 +92,16 @@
             hide_navigation = true;
             if (!(location == 1)) {
                 redirectToPage({location:1, spreadsheetkey:spreadsheetkey,ontology:ontology, minValue:minValue, maxValue:maxValue}); 
-            } 
+            }
+            source_brain_div.css({'max-height':'300px'});
             break;
         default:
             regionData="null";
     } 
              
-    var source_brain_div = $("#source_div").brainmap( { location : location,  ontology : ontology, default_color:default_color, colormap:colormap, hide_navigation:hide_navigation} );
-    //source_brain_div.createBrainHeatmaps(atlasFile,regionData, minValue, maxValue, colormap);
+    source_brain_div.brainmap( { location : location,  ontology : ontology, default_color:default_color, colormap:colormap, hide_navigation:hide_navigation} );
     source_brain_div.createBrainHeatmaps(regionData); 
     source_brain_div.on( "locationChanged", function( event, newLocation ){  redirectToPage2({location:newLocation});  });
-     
-//    source_brain_div.css({'width':'40%', 'height':'40%'});
-//    source_brain_div.css({'width':'100%', 'height':'100%'});
-   
-
     
     Tabletop.init( { key: spreadsheetkey,
                callback: function(data, tabletop) { 
@@ -126,15 +125,7 @@
 		   source_brain_div.createColorBar($("#colorbar_div"), {'width':20, 'height':200, 'colormap':colormap}  )
                },
                simpleSheet: true } )
-//    var fileName = 'samp.json';
-//    $.get(fileName, null, function(regionData){
-//
-//        createBrainHeatmaps(atlasFile,ontology,regionData,location,spreadsheetkey, minValue, maxValue, colormap, default_color);
-//    });
-     
-     
-	
-    		
     })	;
+    
 </script>
 </body>
