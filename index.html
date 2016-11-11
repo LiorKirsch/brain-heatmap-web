@@ -32,7 +32,10 @@
 	var maxValue = $('#maxValue').val();
 	var ontology = $('#ontology').val();
 
-        var spreadsheetkey = getURLParameter("key", spreadsheet);
+	// Google changed their spreadsheet url it no longer has a "key" parameter
+        //var spreadsheetkey = getURLParameter("key", spreadsheet);
+	    
+	var spreadsheetkey = spreadsheet.split("spreadsheets/d/")[1].split("/")[0];
 	if (minValue == "") {minValue = "null"}
 	if (maxValue == "") {maxValue = "null"}
 
